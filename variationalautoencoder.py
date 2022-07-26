@@ -526,11 +526,11 @@ class variationalnetwork:
                 recoded = self.reparameterize(encoded[0], encoded[1])
                 decoded = self.decode(recoded)
                 iterationscore = iterationscore + numpy.sum(numpy.max(numpy.array([decoded, numpy.zeros(decoded.shape)])) - decoded * testset[i] + numpy.log(1 + numpy.exp(-1 * numpy.abs(decoded))))
-                for j in range(encoded[len(encoded) - 1][1].shape[0]):
-                    if encoded[len(encoded) - 1][1][j] > 350:
-                        iterationscore = iterationscore - .5 * (1 + 2 * encoded[len(encoded) - 1][1][j] + encoded[len(encoded) - 1][0][j]**2 + numpy.exp(2 * 350))
+                for j in range(encoded[1].shape[0]):
+                    if encoded[1][j] > 350:
+                        iterationscore = iterationscore - .5 * (1 + 2 * encoded[1][j] + encoded[0][j]**2 + numpy.exp(2 * 350))
                     else:
-                        iterationscore = iterationscore - .5 * (1 + 2 * encoded[len(encoded) - 1][1][j] + encoded[len(encoded) - 1][0][j]**2 + numpy.exp(2 * encoded[len(encoded) - 1][1][j]))
+                        iterationscore = iterationscore - .5 * (1 + 2 * encoded[1][j] + encoded[0][j]**2 + numpy.exp(2 * encoded[1][j]))
             print([iterationscore, previousscore])
             iteration = iteration + 1
 
